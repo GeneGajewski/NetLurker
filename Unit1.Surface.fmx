@@ -1,0 +1,39 @@
+inherited Form1_Surface: TForm1_Surface
+  ClientHeight = 1920
+  ClientWidth = 1080
+  Padding.Right = 12.000000000000000000
+  DesignerMasterStyle = 0
+  inherited StatusBar1: TStatusBar
+    Position.Y = 1898.000000000000000000
+    Size.Width = 1068.000000000000000000
+    inherited Circle1: TCircle
+      RotationCenter.X = 1.000000000000000000
+      RotationCenter.Y = 1.000000000000000000
+    end
+  end
+  inherited Layout1: TLayout
+    Size.Width = 1068.000000000000000000
+    inherited edFreq: TEdit
+      TabOrder = 4
+    end
+    inherited edBand: TEdit
+      TabOrder = 12
+    end
+    inherited edMode: TEdit
+      TabOrder = 16
+    end
+    inherited edSubscribers: TEdit
+      TabOrder = 3
+    end
+  end
+  inherited Layout2: TLayout
+    Size.Width = 1068.000000000000000000
+    Size.Height = 1753.000000000000000000
+    inherited Grid: TStringGrid
+      Size.Width = 1044.000000000000000000
+      Size.Height = 1753.000000000000000000
+      Viewport.Width = 1044.000000000000000000
+      Viewport.Height = 1753.000000000000000000
+    end
+  end
+end

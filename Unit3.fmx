@@ -1,0 +1,86 @@
+object Form3: TForm3
+  Left = 0
+  Top = 0
+  Caption = 'Form3'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Grid: TStringGrid
+    Align = Client
+    CanFocus = True
+    ClipChildren = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'gridstyle'
+    TabOrder = 2
+    Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick, AutoDisplacement]
+    Viewport.Width = 620.000000000000000000
+    Viewport.Height = 439.000000000000000000
+    object scSerialNo: TStringColumn
+      Locked = True
+      Header = 'Serial No'
+      ReadOnly = True
+    end
+    object scCallsign: TStringColumn
+      Header = 'Callsign'
+      ReadOnly = True
+    end
+    object scState: TStringColumn
+      Header = 'State'
+      ReadOnly = True
+    end
+    object scRemarks: TStringColumn
+      Header = 'Remarks'
+      ReadOnly = True
+    end
+    object scQSLInfo: TStringColumn
+      Header = 'QSL Info'
+      ReadOnly = True
+    end
+    object scCity: TStringColumn
+      Header = 'City/Country'
+      ReadOnly = True
+    end
+    object scFirstName: TStringColumn
+      Header = 'First Name'
+      ReadOnly = True
+    end
+    object scStatus: TStringColumn
+      Header = 'Status'
+      ReadOnly = True
+    end
+    object scCounty: TStringColumn
+      Header = 'County'
+      ReadOnly = True
+    end
+    object scGrid: TStringColumn
+      Header = 'Grid'
+      ReadOnly = True
+    end
+    object scStreet: TStringColumn
+      Header = 'Street'
+      ReadOnly = True
+    end
+    object scZip: TStringColumn
+      Header = 'Zip'
+    end
+    object scMemberID: TStringColumn
+      Header = 'Member ID'
+    end
+    object scCountry: TStringColumn
+      Header = 'Country'
+      ReadOnly = True
+    end
+    object scDXCC: TStringColumn
+      Header = 'DXCC'
+      ReadOnly = True
+    end
+    object scPreferredName: TStringColumn
+      Header = 'Preferred Name'
+    end
+  end
+end

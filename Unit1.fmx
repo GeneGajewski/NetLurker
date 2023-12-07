@@ -1,0 +1,302 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  BorderStyle = Single
+  Caption = 'The NetLurker...'
+  ClientHeight = 451
+  ClientWidth = 800
+  Position = DesktopCenter
+  Quality = HighQuality
+  StyleLookup = 'toolbarstyle'
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object StatusBar1: TStatusBar
+    Position.Y = 429.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 800.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object Circle1: TCircle
+      Fill.Color = claChartreuse
+      Position.X = 3.000000000000000000
+      Position.Y = 3.000000000000000000
+      Size.Width = 17.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Label1: TLabel
+      Position.X = 36.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 583.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Label1'
+      TabOrder = 0
+    end
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 800.000000000000000000
+    Size.Height = 145.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object ComboBox1: TComboBox
+      CanFocus = False
+      Position.X = 14.000000000000000000
+      Position.Y = 17.000000000000000000
+      Size.Width = 629.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnChange = ComboBox1Change
+    end
+    object edFreq: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 6
+      CanFocus = False
+      Position.X = 14.000000000000000000
+      Position.Y = 66.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edBand: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 5
+      CanFocus = False
+      Position.X = 93.000000000000000000
+      Position.Y = 66.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edMode: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 3
+      CanFocus = False
+      Position.X = 172.000000000000000000
+      Position.Y = 66.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edNetControl: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 2
+      CanFocus = False
+      Position.X = 298.000000000000000000
+      Position.Y = 66.000000000000000000
+      Size.Width = 229.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edLogger: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 1
+      CanFocus = False
+      Position.X = 298.000000000000000000
+      Position.Y = 109.000000000000000000
+      Size.Width = 229.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object edSubscribers: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 4
+      CanFocus = False
+      Position.X = 14.000000000000000000
+      Position.Y = 109.000000000000000000
+      Size.Width = 70.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Label2: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 14.000000000000000000
+      Position.Y = 47.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'Frequency'
+      TabOrder = 11
+    end
+    object Label3: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 92.000000000000000000
+      Position.Y = 47.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'Band'
+      TabOrder = 7
+      object Label4: TLabel
+        StyledSettings = [Family, Style, FontColor]
+        Position.X = 81.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 10.000000000000000000
+        Text = 'Mode'
+        TabOrder = 4
+      end
+    end
+    object Label5: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 14.000000000000000000
+      Position.Y = 91.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'Subscribers'
+      TabOrder = 10
+    end
+    object Label6: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 298.000000000000000000
+      Position.Y = 47.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'Net Control'
+      TabOrder = 9
+    end
+    object Label7: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 298.000000000000000000
+      Position.Y = 91.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      Text = 'Logger'
+      TabOrder = 8
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 725
+    Top = 20
+    object mQuit: TMenuItem
+      Text = '&File'
+      object mnQuit: TMenuItem
+        Locked = True
+        Text = '&Quit'
+        OnClick = mnQuitClick
+      end
+    end
+    object mnFields: TMenuItem
+      Locked = True
+      Text = '&Fields'
+    end
+    object MenuItem2: TMenuItem
+      Locked = True
+      Text = '&Help'
+      object MenuItem4: TMenuItem
+        Locked = True
+        Text = 'Check for Updates'
+      end
+      object MenuItem3: TMenuItem
+        Locked = True
+        Text = '&About'
+      end
+    end
+  end
+  object Layout2: TLayout
+    Align = Client
+    Size.Width = 800.000000000000000000
+    Size.Height = 284.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    object Grid: TStringGrid
+      Align = Client
+      CanFocus = True
+      ClipChildren = True
+      Margins.Left = 12.000000000000000000
+      Margins.Right = 12.000000000000000000
+      Size.Width = 776.000000000000000000
+      Size.Height = 284.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick]
+      OnCellDblClick = GridCellDblClick
+      Viewport.Width = 756.000000000000000000
+      Viewport.Height = 243.000000000000000000
+      object scSerialNo: TStringColumn
+        Header = 'Serial No'
+        ReadOnly = True
+      end
+      object scCallsign: TStringColumn
+        Header = 'Callsign'
+        ReadOnly = True
+      end
+      object scState: TStringColumn
+        Header = 'State'
+        ReadOnly = True
+      end
+      object scQSL: TStringColumn
+        Header = 'QSL'
+        ReadOnly = True
+      end
+      object scCity: TStringColumn
+        Header = 'City'
+        ReadOnly = True
+      end
+      object scName: TStringColumn
+        Header = 'Name'
+        ReadOnly = True
+      end
+      object scStatus: TStringColumn
+        Header = 'Status'
+        ReadOnly = True
+      end
+      object scCounty: TStringColumn
+        Header = 'County'
+        ReadOnly = True
+      end
+      object scGrid: TStringColumn
+        Header = 'Grid'
+        ReadOnly = True
+      end
+      object scStreet: TStringColumn
+        Header = 'Street'
+        ReadOnly = True
+      end
+      object scZip: TStringColumn
+        Header = 'Zip'
+        ReadOnly = True
+      end
+      object scMemberID: TStringColumn
+        Header = 'MemberID'
+        ReadOnly = True
+      end
+      object scCountry: TStringColumn
+        Header = 'Country'
+        ReadOnly = True
+      end
+      object scDXCC: TStringColumn
+        Header = 'DXCC'
+        ReadOnly = True
+      end
+      object scPreferred: TStringColumn
+        Header = 'Preferred Name'
+        ReadOnly = True
+      end
+      object scRemarks: TStringColumn
+        Header = 'Remarks'
+        ReadOnly = True
+      end
+    end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 840
+    Top = 259
+  end
+end

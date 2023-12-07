@@ -1,4 +1,5 @@
 *.~*
-__astcache\*
-__recorvery\*
-Win64
+__astcache/*
+__recoverry/*
+__history/*
+Win64/*

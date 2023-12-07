@@ -1,0 +1,77 @@
+inherited Form1_Windows: TForm1_Windows
+  ClientHeight = 470
+  ClientWidth = 965
+  DesignerMasterStyle = 0
+  inherited StatusBar1: TStatusBar
+    Position.Y = 448.000000000000000000
+    Size.Width = 965.000000000000000000
+    inherited Circle1: TCircle
+      RotationCenter.X = 1.000000000000000000
+      RotationCenter.Y = 1.000000000000000000
+    end
+    inherited Label1: TLabel
+      Position.X = 298.000000000000000000
+      Position.Y = 90.000000000000000000
+      Size.Width = 68.000000000000000000
+      Text = 'Subscribers'
+      TabOrder = 7
+    end
+  end
+  inherited Layout1: TLayout
+    Size.Width = 965.000000000000000000
+    inherited ComboBox1: TComboBox
+      OnPopup = ComboBox1Popup
+    end
+    inherited edFreq: TEdit
+      TabOrder = 3
+    end
+    inherited edBand: TEdit
+      TabOrder = 11
+    end
+    inherited edMode: TEdit
+      TabOrder = 14
+    end
+    inherited Label2: TLabel
+      TabOrder = 9
+    end
+    inherited Label3: TLabel
+      TabOrder = 5
+      inherited Label4: TLabel
+        TabOrder = 3
+      end
+    end
+    inherited Label5: TLabel
+      TabOrder = 8
+    end
+    inherited Label6: TLabel
+      TabOrder = 7
+    end
+    inherited Label7: TLabel
+      TabOrder = 6
+    end
+  end
+  inherited MainMenu1: TMainMenu
+    Left = 821
+    Top = 32
+    inherited MenuItem2: TMenuItem
+      inherited MenuItem3: TMenuItem
+        OnClick = MenuItem3Click
+      end
+    end
+  end
+  inherited Layout2: TLayout
+    Size.Width = 965.000000000000000000
+    Size.Height = 303.000000000000000000
+    inherited Grid: TStringGrid
+      Size.Width = 941.000000000000000000
+      Size.Height = 303.000000000000000000
+      Viewport.Width = 941.000000000000000000
+      Viewport.Height = 303.000000000000000000
+    end
+  end
+  inherited Timer1: TTimer
+    Interval = 30000
+    Left = 883
+    Top = 31
+  end
+end
