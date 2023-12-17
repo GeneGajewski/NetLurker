@@ -3,3 +3,5 @@ __astcache/*
 __recoverry/*
 __history/*
 Win64/*
+*-cache/*
+*-SetupFiles/*
