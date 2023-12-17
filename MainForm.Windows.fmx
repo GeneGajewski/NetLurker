@@ -1,4 +1,4 @@
-inherited Form1_Windows: TForm1_Windows
+inherited frmMain_Windows: TfrmMain_Windows
   ClientHeight = 470
   ClientWidth = 965
   DesignerMasterStyle = 0
@@ -9,7 +9,7 @@ inherited Form1_Windows: TForm1_Windows
       RotationCenter.X = 1.000000000000000000
       RotationCenter.Y = 1.000000000000000000
     end
-    inherited Label1: TLabel
+    inherited lbStatus: TLabel
       Position.X = 298.000000000000000000
       Position.Y = 90.000000000000000000
       Size.Width = 68.000000000000000000
@@ -19,26 +19,20 @@ inherited Form1_Windows: TForm1_Windows
   end
   inherited Layout1: TLayout
     Size.Width = 965.000000000000000000
-    inherited ComboBox1: TComboBox
-      OnPopup = ComboBox1Popup
-    end
     inherited edFreq: TEdit
       TabOrder = 3
     end
     inherited edBand: TEdit
-      TabOrder = 11
+      TabOrder = 10
     end
     inherited edMode: TEdit
-      TabOrder = 14
+      TabOrder = 12
     end
     inherited Label2: TLabel
       TabOrder = 9
     end
     inherited Label3: TLabel
       TabOrder = 5
-      inherited Label4: TLabel
-        TabOrder = 3
-      end
     end
     inherited Label5: TLabel
       TabOrder = 8
@@ -49,15 +43,13 @@ inherited Form1_Windows: TForm1_Windows
     inherited Label7: TLabel
       TabOrder = 6
     end
+    inherited bnSelect: TButton
+      TabOrder = 11
+    end
   end
   inherited MainMenu1: TMainMenu
     Left = 821
     Top = 32
-    inherited MenuItem2: TMenuItem
-      inherited MenuItem3: TMenuItem
-        OnClick = MenuItem3Click
-      end
-    end
   end
   inherited Layout2: TLayout
     Size.Width = 965.000000000000000000

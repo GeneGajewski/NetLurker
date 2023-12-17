@@ -18,47 +18,23 @@
 //---------------------------------------------------------------------------
 
 #include <fmx.h>
-#ifdef _WIN32
-#include <tchar.h>
-#endif
 #pragma hdrstop
-#include <System.StartUpCopy.hpp>
+
+#include "SelectForm.h"
+#include "DataModule.h"
 //---------------------------------------------------------------------------
-USEFORM("MainForm.cpp", frmMain);
-USEFORM("DataModule.cpp", DMod); /* TDataModule: File Type */
-USEFORM("DLChoiceForm.cpp", frmDLChoice);
-USEFORM("DLForm.cpp", frmDL);
-USEFORM("AboutForm.cpp", frmAbout);
-USEFORM("SelectForm.cpp", frmSelect);
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+TfrmSelect *frmSelect;
 //---------------------------------------------------------------------------
-extern "C" int FMXmain()
+__fastcall TfrmSelect::TfrmSelect(TComponent* Owner)
+	: TForm(Owner)
 {
-	try
-	{
-		Application->Initialize();
-		Application->CreateForm(__classid(TDMod), &DMod);
-		Application->CreateForm(__classid(TfrmMain), &frmMain);
-		Application->CreateForm(__classid(TfrmDL), &frmDL);
-		Application->CreateForm(__classid(TfrmDLChoice), &frmDLChoice);
-		Application->CreateForm(__classid(TfrmAbout), &frmAbout);
-		Application->CreateForm(__classid(TfrmSelect), &frmSelect);
-		Application->Run();
-	}
-	catch (Exception &exception)
-	{
-		Application->ShowException(&exception);
-	}
-	catch (...)
-	{
-		try
-		{
-			throw Exception("");
-		}
-		catch (Exception &exception)
-		{
-			Application->ShowException(&exception);
-		}
-	}
-	return 0;
 }
 //---------------------------------------------------------------------------
+void __fastcall TfrmSelect::ListBox1DblClick(TObject *Sender)
+{
+    ModalResult = mrOk;
+}
+//---------------------------------------------------------------------------
+

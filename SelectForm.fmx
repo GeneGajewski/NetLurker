@@ -1,0 +1,48 @@
+object frmSelect: TfrmSelect
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  Caption = 'Active NETS'
+  ClientHeight = 245
+  ClientWidth = 299
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object ListBox1: TListBox
+    Position.X = 18.000000000000000000
+    Position.Y = 19.000000000000000000
+    Size.Width = 262.000000000000000000
+    Size.Height = 174.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    OnDblClick = ListBox1DblClick
+    DisableFocusEffect = True
+    DefaultItemStyles.ItemStyle = ''
+    DefaultItemStyles.GroupHeaderStyle = ''
+    DefaultItemStyles.GroupFooterStyle = ''
+    Viewport.Width = 258.000000000000000000
+    Viewport.Height = 170.000000000000000000
+  end
+  object bnOK: TButton
+    ModalResult = 1
+    Position.X = 79.000000000000000000
+    Position.Y = 209.000000000000000000
+    Size.Width = 58.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = '&Ok'
+  end
+  object bnCancel: TButton
+    ModalResult = 2
+    Position.X = 161.000000000000000000
+    Position.Y = 209.000000000000000000
+    Size.Width = 58.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'C&ancel'
+  end
+end

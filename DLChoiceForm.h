@@ -17,48 +17,34 @@
  */
 //---------------------------------------------------------------------------
 
-#include <fmx.h>
-#ifdef _WIN32
-#include <tchar.h>
-#endif
-#pragma hdrstop
-#include <System.StartUpCopy.hpp>
+#ifndef DLChoiceFormH
+#define DLChoiceFormH
 //---------------------------------------------------------------------------
-USEFORM("MainForm.cpp", frmMain);
-USEFORM("DataModule.cpp", DMod); /* TDataModule: File Type */
-USEFORM("DLChoiceForm.cpp", frmDLChoice);
-USEFORM("DLForm.cpp", frmDL);
-USEFORM("AboutForm.cpp", frmAbout);
-USEFORM("SelectForm.cpp", frmSelect);
+#include <System.Classes.hpp>
+#include <FMX.Controls.hpp>
+#include <FMX.Forms.hpp>
+#include <FMX.Controls.Presentation.hpp>
+#include <FMX.StdCtrls.hpp>
+#include <FMX.Types.hpp>
+#include <FMX.Memo.hpp>
+#include <FMX.Memo.Types.hpp>
+#include <FMX.ScrollBox.hpp>
 //---------------------------------------------------------------------------
-extern "C" int FMXmain()
+class TfrmDLChoice : public TForm
 {
-	try
-	{
-		Application->Initialize();
-		Application->CreateForm(__classid(TDMod), &DMod);
-		Application->CreateForm(__classid(TfrmMain), &frmMain);
-		Application->CreateForm(__classid(TfrmDL), &frmDL);
-		Application->CreateForm(__classid(TfrmDLChoice), &frmDLChoice);
-		Application->CreateForm(__classid(TfrmAbout), &frmAbout);
-		Application->CreateForm(__classid(TfrmSelect), &frmSelect);
-		Application->Run();
-	}
-	catch (Exception &exception)
-	{
-		Application->ShowException(&exception);
-	}
-	catch (...)
-	{
-		try
-		{
-			throw Exception("");
-		}
-		catch (Exception &exception)
-		{
-			Application->ShowException(&exception);
-		}
-	}
-	return 0;
-}
+__published:	// IDE-managed Components
+	TLabel *Label1;
+	TButton *bnOK;
+	TButton *bnCancel;
+	TMemo *Memo1;
+
+private:	// User declarations
+public:		// User declarations
+
+	__fastcall TfrmDLChoice(TComponent* Owner);
+    void SetVersion(String &ver);
+};
 //---------------------------------------------------------------------------
+extern PACKAGE TfrmDLChoice *frmDLChoice;
+//---------------------------------------------------------------------------
+#endif

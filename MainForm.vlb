@@ -1,5 +1,5 @@
 ﻿[]
-Coordinates=290,60,225,2962
+Coordinates=0,0,101,146
 Visible=True
 ExplicitSubNodes=IsChecked;AutoCapture;AutoCheck;AutoTranslate;Bitmap;Bitmap.BitmapScale;Bitmap.Height;Bitmap.Width;CanFocus;CanParentFocus;ClipChildren;ClipParent;ComponentIndex;Controls.Capacity;Controls.Count;Cursor;DefaultTextSettings.FontColor;DefaultTextSettings.IsAdjustChanged;DefaultTextSettings.IsChanged;DefaultTextSettings.WordWrap;DesignInfo;DisableDisappear;DisableFocusEffect;Enabled;EnableDragHighlight;Font.Family;Font.Size;FontColor;GroupIndex;Height;HelpContext;HelpKeyword;Hint;HitTest;ImageIndex;Index;IsSelected;Locked;MainMenu.ComponentIndex;MainMenu.DesignInfo;MainMenu.Index;MainMenu.Name;MainMenu.Stored;MainMenu.StyleName;MainMenu.Tag;MainMenu.TagFloat;MainMenu.TagString;Margins.Bottom;Margins.Left;Margins.Right;Margins.Top;Opacity;Owner.ComponentIndex;Owner.DesignInfo;Owner.Name;Owner.Tag;Padding.Bottom;Padding.Left;Padding.Right;Padding.Top;Parent.ComponentIndex;Parent.DesignInfo;Parent.Index;Parent.Name;Parent.Stored;Parent.StyleName;Parent.Tag;Parent.TagFloat;Parent.TagString;ParentControl.AutoCapture;ParentControl.CanFocus;ParentControl.CanParentFocus;ParentControl.ClipChildren;ParentControl.ClipParent;ParentControl.ComponentIndex;ParentControl.Cursor;ParentControl.DesignInfo;ParentControl.DisableDisappear;ParentControl.DisableFocusEffect;ParentControl.Enabled;ParentControl.EnableDragHighlight;ParentControl.Height;ParentControl.Hint;ParentControl.HitTest;ParentControl.Index;ParentControl.Locked;ParentControl.Name;ParentControl.Opacity;ParentControl.Pressed;ParentControl.ShowHint;ParentControl.Stored;ParentControl.StyleName;ParentControl.TabOrder;ParentControl.TabStop;ParentControl.Tag;ParentControl.TagFloat;ParentControl.TagString;ParentControl.Visible;ParentControl.Width;Position.StoreAsInt;Position.X;Position.Y;Pressed;RadioItem;ResultingTextSettings.FontColor;ResultingTextSettings.IsAdjustChanged;ResultingTextSettings.IsChanged;ResultingTextSettings.WordWrap;ShortCut;ShowHint;Size.Height;Size.PlatformDefault;Size.Width;Stored;StyleLookup;StyleName;TabOrder;TabStop;Tag;TagFloat;TagString;Text;TextSettings.FontColor;TextSettings.IsAdjustChanged;TextSettings.IsChanged;TextSettings.WordWrap;TouchTargetExpansion.Bottom;TouchTargetExpansion.Left;TouchTargetExpansion.Right;TouchTargetExpansion.Top;Visible;Width;WordWrap
 
@@ -23,9 +23,6 @@ Coordinates=287,1,62,36
 
 [scPreferred]
 Coordinates=287,56,81,36
-
-[ComboBox1]
-Coordinates=0,0,101,146
 
 [scCountry]
 Coordinates=287,166,72,36
@@ -66,9 +63,6 @@ Coordinates=387,313,53,36
 [scName]
 Coordinates=318,313,61,36
 
-[Label1]
-Coordinates=120,78,53,58
-
 [Grid]
 Coordinates=120,1,40,58
 
@@ -91,4 +85,7 @@ EditingLayerName=
 
 [mnFields]
 Coordinates=406,276,79,36
+
+[lbStatus]
+Coordinates=120,78,53,58
 
