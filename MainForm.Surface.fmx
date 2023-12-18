@@ -1,4 +1,4 @@
-inherited Form1_Surface: TForm1_Surface
+inherited frmMain_Surface: TfrmMain_Surface
   ClientHeight = 1920
   ClientWidth = 1080
   Padding.Right = 12.000000000000000000
@@ -17,13 +17,31 @@ inherited Form1_Surface: TForm1_Surface
       TabOrder = 4
     end
     inherited edBand: TEdit
-      TabOrder = 12
+      TabOrder = 10
     end
     inherited edMode: TEdit
-      TabOrder = 16
+      TabOrder = 12
     end
     inherited edSubscribers: TEdit
       TabOrder = 3
+    end
+    inherited Label2: TLabel
+      TabOrder = 9
+    end
+    inherited Label3: TLabel
+      TabOrder = 5
+    end
+    inherited Label5: TLabel
+      TabOrder = 8
+    end
+    inherited Label6: TLabel
+      TabOrder = 7
+    end
+    inherited Label7: TLabel
+      TabOrder = 6
+    end
+    inherited bnSelect: TButton
+      TabOrder = 11
     end
   end
   inherited Layout2: TLayout

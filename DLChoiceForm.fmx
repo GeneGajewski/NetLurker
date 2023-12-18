@@ -1,0 +1,48 @@
+object frmDLChoice: TfrmDLChoice
+  Left = 0
+  Top = 0
+  ClientHeight = 274
+  ClientWidth = 389
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Label1: TLabel
+    Position.X = 18.000000000000000000
+    Position.Y = 14.000000000000000000
+    Size.Width = 344.000000000000000000
+    Size.Height = 46.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Label1'
+    TabOrder = 0
+  end
+  object bnOK: TButton
+    ModalResult = 1
+    Position.X = 107.000000000000000000
+    Position.Y = 235.000000000000000000
+    TabOrder = 1
+    Text = '&OK'
+  end
+  object bnCancel: TButton
+    ControlType = Platform
+    ModalResult = 2
+    Position.X = 202.000000000000000000
+    Position.Y = 235.000000000000000000
+    TabOrder = 2
+    Text = 'C&ancel'
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    TextSettings.WordWrap = True
+    Position.X = 8.000000000000000000
+    Position.Y = 73.000000000000000000
+    Size.Width = 373.000000000000000000
+    Size.Height = 142.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 373.000000000000000000
+    Viewport.Height = 142.000000000000000000
+  end
+end

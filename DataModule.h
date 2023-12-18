@@ -1,7 +1,25 @@
+/*
+ *   Copyright (C) 2023 Gene Gajewski WG5ENE
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
 //---------------------------------------------------------------------------
 
-#ifndef Unit2H
-#define Unit2H
+#ifndef DataModuleH
+#define DataModuleH
 //---------------------------------------------------------------------------
 #include <System.Classes.hpp>
 #include <Data.Bind.Components.hpp>
@@ -16,12 +34,11 @@
 #include <vector>
 
 
-// simple 1-1 data structures to match NETLOGGER XML nodes
+// simple 1-1 data structures to match NETLOGGER XML API nodes
 
 class NLHeader
 {
 	public:
-
 	String CreationDateUTC;
 	String Copyright;
 	String APIVersion;
@@ -31,7 +48,6 @@ class NLHeader
 class NLError
 {
 	public:
-
 	String Value;
 	String ResponseCode;
 };
@@ -60,14 +76,11 @@ class NLNet
 	String MiscNetParameters;
 	String ClosedAt;
 	String Asassinated;
-
-	NLNet() : SubscriberCount(0), InactivityTimer(0) {};
 };
 
 class NLServer
 {
 	public:
-
 	String ServerName;
 	String ServerActiveNetCount;
 	std::map<String, NLNet> Nets;
@@ -77,7 +90,6 @@ class NLServer
 class NLCheckin
 {
 	public:
-
 	String SerialNo;
 	String Callsign;
 	String State;
@@ -101,7 +113,7 @@ class ServerList
 {
   public:
 	String ResponseCode;
-	std::map<String,String> NetServer;
+	std::map<String,String> NetServerMap;  // Netname/ServerName
 	std::map<String, NLServer> Servers;
 };
 
@@ -145,23 +157,23 @@ class TDMod : public TDataModule
 
   private: // User declarations
 
-  NetLoggerXML nl;
+  NetLoggerXML NL; // holds everything!
 
-  bool ReadHeader(_di_IXMLNode &head, NLHeader &header);
-  bool ReadServerList(_di_IXMLNode &head, ServerList &list);
-  bool ReadServer(_di_IXMLNode &head, ServerList &servers);
-  bool ReadNet(_di_IXMLNode &head, NLServer &server);
-  bool ReadCheckinList(_di_IXMLNode &head, CheckinList &list);
-  bool ReadCheckin(_di_IXMLNode &head, CheckinList &list);
-  String GetValue(const _di_IXMLNode &node);
+  bool ReadHeader(_di_IXMLNode &Head, NLHeader &Header);
+  bool ReadServerList(_di_IXMLNode &Head, ServerList &List);
+  bool ReadServer(_di_IXMLNode &Head, ServerList &Servers);
+  bool ReadNet(_di_IXMLNode &Head, NLServer &Server);
+  bool ReadCheckinList(_di_IXMLNode &Head, CheckinList &List);
+  bool ReadCheckin(_di_IXMLNode &Head, CheckinList &List);
+  String GetValue(const _di_IXMLNode &Node);
 
   public: // User declarations
 
 	__fastcall TDMod(TComponent* Owner);
 	bool DoQuery(NetLoggerXML &nl);
-	bool GetNetData(const String &netname, NLNet &net);
-	bool GetNetNames(TStringList *list);
-	CheckinList *GetCheckins(const String netname);
+	bool GetNetData(const String &Netname, NLNet &Net);
+	bool GetNetNames(TStringList *List);
+	CheckinList *GetCheckins(const String NetName);
 	const String &ErrorMessage();
 	};
 //---------------------------------------------------------------------------

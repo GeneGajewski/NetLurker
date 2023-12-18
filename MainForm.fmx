@@ -1,8 +1,7 @@
-object Form1: TForm1
+object frmMain: TfrmMain
   Left = 0
   Top = 0
-  BorderStyle = Single
-  Caption = 'The NetLurker...'
+  Caption = 'The NET Lurker...'
   ClientHeight = 451
   ClientWidth = 800
   Position = DesktopCenter
@@ -28,13 +27,13 @@ object Form1: TForm1
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
     end
-    object Label1: TLabel
+    object lbStatus: TLabel
       Position.X = 36.000000000000000000
       Position.Y = 4.000000000000000000
       Size.Width = 583.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
-      Text = 'Label1'
+      Text = 'lbStatus'
       TabOrder = 0
     end
   end
@@ -44,19 +43,10 @@ object Form1: TForm1
     Size.Height = 145.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 5
-    object ComboBox1: TComboBox
-      CanFocus = False
-      Position.X = 14.000000000000000000
-      Position.Y = 17.000000000000000000
-      Size.Width = 629.000000000000000000
-      Size.Height = 22.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      OnChange = ComboBox1Change
-    end
     object edFreq: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 6
+      Cursor = crDefault
       CanFocus = False
       Position.X = 14.000000000000000000
       Position.Y = 66.000000000000000000
@@ -67,6 +57,7 @@ object Form1: TForm1
     object edBand: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 5
+      Cursor = crDefault
       CanFocus = False
       Position.X = 93.000000000000000000
       Position.Y = 66.000000000000000000
@@ -77,6 +68,7 @@ object Form1: TForm1
     object edMode: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 3
+      Cursor = crDefault
       CanFocus = False
       Position.X = 172.000000000000000000
       Position.Y = 66.000000000000000000
@@ -87,6 +79,7 @@ object Form1: TForm1
     object edNetControl: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 2
+      Cursor = crDefault
       CanFocus = False
       Position.X = 298.000000000000000000
       Position.Y = 66.000000000000000000
@@ -96,7 +89,8 @@ object Form1: TForm1
     end
     object edLogger: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 1
+      TabOrder = 0
+      Cursor = crDefault
       CanFocus = False
       Position.X = 298.000000000000000000
       Position.Y = 109.000000000000000000
@@ -107,6 +101,7 @@ object Form1: TForm1
     object edSubscribers: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 4
+      Cursor = crDefault
       CanFocus = False
       Position.X = 14.000000000000000000
       Position.Y = 109.000000000000000000
@@ -143,7 +138,7 @@ object Form1: TForm1
         Size.PlatformDefault = False
         TextSettings.Font.Size = 10.000000000000000000
         Text = 'Mode'
-        TabOrder = 4
+        TabOrder = 3
       end
     end
     object Label5: TLabel
@@ -179,10 +174,29 @@ object Form1: TForm1
       Text = 'Logger'
       TabOrder = 8
     end
+    object bnSelect: TButton
+      Position.X = 663.000000000000000000
+      Position.Y = 17.000000000000000000
+      TabOrder = 12
+      Text = '&Select'
+      OnClick = bnSelectClick
+    end
+    object edNET: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 1
+      TabStop = False
+      Cursor = crDefault
+      CanFocus = False
+      Position.X = 14.000000000000000000
+      Position.Y = 17.000000000000000000
+      Size.Width = 617.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
   end
   object MainMenu1: TMainMenu
-    Left = 725
-    Top = 20
+    Left = 587
+    Top = 81
     object mQuit: TMenuItem
       Text = '&File'
       object mnQuit: TMenuItem
@@ -195,16 +209,23 @@ object Form1: TForm1
       Locked = True
       Text = '&Fields'
     end
-    object MenuItem2: TMenuItem
+    object mnHelp: TMenuItem
       Locked = True
       Text = '&Help'
-      object MenuItem4: TMenuItem
+      object nmHelp: TMenuItem
         Locked = True
-        Text = 'Check for Updates'
+        Text = '&Help'
+        OnClick = nmHelpClick
       end
-      object MenuItem3: TMenuItem
+      object mnAbout: TMenuItem
         Locked = True
         Text = '&About'
+        OnClick = mnAboutClick
+      end
+      object nmUpdates: TMenuItem
+        Locked = True
+        Text = 'Check Updates'
+        OnClick = nmUpdatesClick
       end
     end
   end
@@ -226,8 +247,8 @@ object Form1: TForm1
       TabOrder = 5
       Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick]
       OnCellDblClick = GridCellDblClick
-      Viewport.Width = 756.000000000000000000
-      Viewport.Height = 243.000000000000000000
+      Viewport.Width = 776.000000000000000000
+      Viewport.Height = 284.000000000000000000
       object scSerialNo: TStringColumn
         Header = 'Serial No'
         ReadOnly = True

@@ -1,0 +1,33 @@
+object frmDL: TfrmDL
+  Left = 0
+  Top = 0
+  BorderIcons = []
+  BorderStyle = ToolWindow
+  ClientHeight = 80
+  ClientWidth = 480
+  Position = MainFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object ProgressBar1: TProgressBar
+    Orientation = Horizontal
+    Position.X = 8.000000000000000000
+    Position.Y = 45.000000000000000000
+    Size.Width = 464.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Label1: TLabel
+    Position.X = 8.000000000000000000
+    Position.Y = 15.000000000000000000
+    Size.Width = 464.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.HorzAlign = Center
+    Text = 'Label1'
+    TabOrder = 1
+  end
+end
