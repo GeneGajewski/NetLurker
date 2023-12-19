@@ -42,7 +42,7 @@ object frmDLChoice: TfrmDLChoice
     Size.Height = 142.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
-    Viewport.Width = 373.000000000000000000
-    Viewport.Height = 142.000000000000000000
+    Viewport.Width = 369.000000000000000000
+    Viewport.Height = 138.000000000000000000
   end
 end

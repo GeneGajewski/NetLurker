@@ -3,7 +3,7 @@
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
+ *   the Free Software Foundation; either version 3 of the License, or
  *   (at your option) any later version.
  *
  *   This program is distributed in the hope that it will be useful,
@@ -113,7 +113,7 @@ bool TfrmMain::GetCheckins()
 
 void TfrmMain::SetRows(CheckinList* Clist)
 {
-	int Selected_row = Clist->Pointer.ToIntDef(0) - 1;
+	int Selected_row = Clist->Pointer.ToIntDef(0);
 	int Row;
 
 	auto SetCol = [this, &Row](TColumn* Column, const String &Value) {
@@ -149,8 +149,7 @@ void TfrmMain::SetRows(CheckinList* Clist)
 		SetCol(scDXCC, Chk.DXCC);
 		SetCol(scPreferred, Chk.PreferredName);
 	}
-
-	Grid->RowCount = Row + 1;
+	Grid->RowCount = Clist->Checkins.size();
 }
 //---------------------------------------------------------------------------
 
@@ -317,8 +316,17 @@ void __fastcall TfrmMain::mnFieldsClick(TObject* Sender)
 	for (int x = 0; x < Grid->ColumnCount; x++)
 		if (MenuItem->Text == Grid->Columns[x]->Header) {
 			Grid->Columns[x]->Visible = MenuItem->IsChecked;
+
+			// force a re-draw of selected row when changing number of
+			// visible columns - due to weird Delphi 11.3 bug which skips it
+			int row = Grid->Row;
+			Grid->SelectRow(-1);
+			Grid->SelectRow(row);
+
 			break;
 		}
+
+
 }
 //---------------------------------------------------------------------------
 

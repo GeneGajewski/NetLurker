@@ -138,7 +138,7 @@ object frmMain: TfrmMain
         Size.PlatformDefault = False
         TextSettings.Font.Size = 10.000000000000000000
         Text = 'Mode'
-        TabOrder = 3
+        TabOrder = 4
       end
     end
     object Label5: TLabel
@@ -247,8 +247,8 @@ object frmMain: TfrmMain
       TabOrder = 5
       Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick]
       OnCellDblClick = GridCellDblClick
-      Viewport.Width = 776.000000000000000000
-      Viewport.Height = 284.000000000000000000
+      Viewport.Width = 756.000000000000000000
+      Viewport.Height = 243.000000000000000000
       object scSerialNo: TStringColumn
         Header = 'Serial No'
         ReadOnly = True
