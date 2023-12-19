@@ -3,7 +3,7 @@
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
+ *   the Free Software Foundation; either version 3 of the License, or
  *   (at your option) any later version.
  *
  *   This program is distributed in the hope that it will be useful,
@@ -36,7 +36,7 @@ namespace Util
 
     // ctor for a specifically named file module
     WinVersionQuery::WinVersionQuery(const wchar_t* _modulename) :
-        pBlock(NULL), lp_size(0), lp(NULL)
+		pBlock(NULL), lp_size(0), lp(NULL)
     {
         SetModuleName(_modulename);
     }
@@ -49,7 +49,7 @@ namespace Util
     }
 
     // dynamic re-use
-    bool WinVersionQuery::SetModuleName(const wchar_t* _modulename)
+	bool WinVersionQuery::SetModuleName(const wchar_t* _modulename)
     {
         if (pBlock) {
             delete pBlock;
@@ -70,85 +70,97 @@ namespace Util
         if (block_size) {
             pBlock = new char(block_size);
             BOOL retval = GetFileVersionInfoExW(
-                FILE_VER_GET_NEUTRAL, modulename, NULL, block_size, pBlock);
-            if (retval) {
-                // get ptr to translation block array
-                HRESULT result = VerQueryValueW(pBlock,
-                    L"\\VarFileInfo\\Translation", (LPVOID*)&lp, &lp_size);
-                if (SUCCEEDED(result)) {
-                    SetLCP(0); // default
-                    return true;
-                }
-            }
-            if (pBlock)
-                delete pBlock;
-            pBlock = NULL;
-        }
-        return false;
-    }
-    // return a string value for current lang/codepge/stringname
-    const wchar_t* WinVersionQuery::GetStr(const String &name)
-    {
-        if (pBlock) {
-            UINT str_size;
-            wchar_t *str, *qry = QStr(name);
+				FILE_VER_GET_NEUTRAL, modulename, NULL, block_size, pBlock);
+			if (retval) {
+				// get ptr to translation block array
+				HRESULT result = VerQueryValueW(pBlock,
+					L"\\VarFileInfo\\Translation", (LPVOID*)&lp, &lp_size);
+				if (SUCCEEDED(result)) {
+					SetLCP(0); // default
+					flags = GetFlags();
+					return true;
+				}
+			}
+			if (pBlock)
+				delete pBlock;
+			pBlock = NULL;
+			lp = NULL;
+			lp_size = 0;
+		}
+		return false;
+	}
+	// return a string value for current lang/codepge/stringname
+	const wchar_t* WinVersionQuery::GetStr(const String &name)
+	{
+		if (pBlock) {
+			UINT str_size;
+			wchar_t *str, *qry = QStr(name);
 
-            HRESULT result =
-                VerQueryValueW(pBlock, qry, (LPVOID*)&str, &str_size);
-            if (SUCCEEDED(result) && str_size)
-                return str;
-        }
-        return NULL;
-    }
+			HRESULT result =
+				VerQueryValueW(pBlock, qry, (LPVOID*)&str, &str_size);
+			if (SUCCEEDED(result) && str_size)
+				return str;
+		}
+		return NULL;
+	}
 
-    // select lang/codepage array entry  0-based
-    bool WinVersionQuery::SetLCP(unsigned index)
-    {
-        int count = LCPCount();
+	// select lang/codepage array entry  0-based
+	bool WinVersionQuery::SetLCP(unsigned index)
+	{
+		int count = LCPCount();
 
-        if (count && index < count) {
-            language = lp[index].wLanguage;
-            codepage = lp[index].wCodePage;
-            return true;
-        }
-        return false;
-    }
+		if (count && index < count) {
+			language = lp[index].wLanguage;
+			codepage = lp[index].wCodePage;
+			return true;
+		}
+		return false;
+	}
 
-    // number of language/codepage entries
-    unsigned WinVersionQuery::LCPCount()
-    {
-        return lp != NULL ? lp_size / sizeof(LANGANDCODEPAGE) : 0;
-    }
+	// number of language/codepage entries
+	unsigned WinVersionQuery::LCPCount()
+	{
+		return lp != NULL ? lp_size / sizeof(LANGANDCODEPAGE) : 0;
+	}
 
-    // return ptr to windows fixedfileinfo struct or NULL if failed.
-    // the returned ptr is only valid for this obj's lifetime
-    const VS_FIXEDFILEINFO* WinVersionQuery::GetFixedInfo()
-    {
-        if (pBlock) {
-            UINT size;
-            VS_FIXEDFILEINFO* vsfixed;
-            HRESULT result =
-                VerQueryValueW(pBlock, L"\\", (LPVOID*)&vsfixed, &size);
+	// return ptr to windows fixedfileinfo struct or NULL if failed.
+	// the returned ptr is only valid for this obj's lifetime
+	const VS_FIXEDFILEINFO* WinVersionQuery::GetFixedInfo()
+	{
+		if (pBlock) {
+			UINT size;
+			VS_FIXEDFILEINFO* vsfixed;
+			HRESULT result =
+				VerQueryValueW(pBlock, L"\\", (LPVOID*)&vsfixed, &size);
 
-            if (SUCCEEDED(result) && vsfixed->dwSignature == magic_number)
-                return vsfixed;
-        }
-        return NULL;
-    }
+			if (SUCCEEDED(result) && vsfixed->dwSignature == magic_number)
+				return vsfixed;
+		}
+		return NULL;
+	}
 
-    // dtor
-    WinVersionQuery::~WinVersionQuery()
-    {
-        if (pBlock)
-            delete pBlock;
-    }
+	// dtor
+	WinVersionQuery::~WinVersionQuery()
+	{
+		if (pBlock)
+			delete pBlock;
+	}
 
-    // build string for VerQueryValue string-value query
-    wchar_t* WinVersionQuery::QStr(const String &member)
-    {
-        query.sprintf(fmt, language, codepage) += member;
-        return query.c_str();
-    }
+	// build string for VerQueryValue string-value query
+	wchar_t* WinVersionQuery::QStr(const String &name)
+	{
+		query.sprintf(fmt, language, codepage) += name;
+		return query.c_str();
+	}
 
+   DWORD WinVersionQuery::GetFlags()
+   {
+	   if(pBlock)
+	   {
+		   const VS_FIXEDFILEINFO *info = GetFixedInfo();
+		   return info->dwFileFlags & info->dwFileFlagsMask;
+	   }
+	   return 0;
+   }
 } // namespace Util
 

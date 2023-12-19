@@ -3,7 +3,7 @@
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
+ *   the Free Software Foundation; either version 3 of the License, or
  *   (at your option) any later version.
  *
  *   This program is distributed in the hope that it will be useful,
@@ -24,12 +24,12 @@
 #pragma hdrstop
 #include <System.StartUpCopy.hpp>
 //---------------------------------------------------------------------------
-USEFORM("MainForm.cpp", frmMain);
-USEFORM("DataModule.cpp", DMod); /* TDataModule: File Type */
-USEFORM("DLChoiceForm.cpp", frmDLChoice);
-USEFORM("DLForm.cpp", frmDL);
-USEFORM("AboutForm.cpp", frmAbout);
 USEFORM("SelectForm.cpp", frmSelect);
+USEFORM("AboutForm.cpp", frmAbout);
+USEFORM("DataModule.cpp", DMod); /* TDataModule: File Type */
+USEFORM("MainForm.cpp", frmMain);
+USEFORM("DLForm.cpp", frmDL);
+USEFORM("DLChoiceForm.cpp", frmDLChoice);
 //---------------------------------------------------------------------------
 extern "C" int FMXmain()
 {
