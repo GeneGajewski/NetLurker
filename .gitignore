@@ -5,3 +5,5 @@ __history/*
 Win64/*
 *-cache/*
 *-SetupFiles/*
+*.local
+*.dsk
