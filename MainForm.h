@@ -101,10 +101,12 @@ class TfrmMain : public TForm
 	void __fastcall mnAboutClick(TObject *Sender);
 	void __fastcall bnSelectClick(TObject *Sender);
 	void __fastcall nmHelpClick(TObject *Sender);
+	void __fastcall FormShow(TObject *Sender);
   private: // User declaration
 	bool UpdateNetList = false;
 	TStringList *NetList;
 	NLNet CurNet;
+	std::map<String, TStringColumn*> ColumnMap;
 	bool GetCheckins();
 	void SetRows(CheckinList *clist);
 	void SetCol(TStringColumn *col, const String &val, int row);

@@ -91,6 +91,7 @@ bool TDMod::ReadHeader(_di_IXMLNode& Head, NLHeader& Header)
 		else if (Name == "TimeZone")
 			Header.TimeZone = GetValue(Child);
 	}
+//    Child=NULL;
 	return true;
 }
 

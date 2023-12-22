@@ -11,6 +11,7 @@ object frmMain: TfrmMain
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnDestroy = FormDestroy
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object StatusBar1: TStatusBar
     Position.Y = 429.000000000000000000
@@ -244,11 +245,13 @@ object frmMain: TfrmMain
       Size.Width = 776.000000000000000000
       Size.Height = 284.000000000000000000
       Size.PlatformDefault = False
+      StyledSettings = []
       TabOrder = 5
-      Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, Tabs, Header, HeaderClick]
+      RowCount = 0
+      Options = [AlternatingRowBackground, ColumnResize, ColumnMove, ColLines, RowLines, RowSelect, AlwaysShowSelection, Header, HeaderClick]
       OnCellDblClick = GridCellDblClick
-      Viewport.Width = 756.000000000000000000
-      Viewport.Height = 243.000000000000000000
+      Viewport.Width = 772.000000000000000000
+      Viewport.Height = 259.000000000000000000
       object scSerialNo: TStringColumn
         Header = 'Serial No'
         ReadOnly = True
