@@ -40,6 +40,8 @@
 #include <Web.HTTPApp.hpp>
 #include <FMX.Layouts.hpp>
 #include <FMX.Colors.hpp>
+#include <FMX.ScrollBox.hpp>
+#include <map>
 
 #include "DataModule.h"
 #include <FMX.ScrollBox.hpp>

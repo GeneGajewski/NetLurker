@@ -34,6 +34,7 @@
 #include "WinVersionQuery.h"
 
 #include <System.UITypes.hpp>
+#include <vector>
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -46,19 +47,18 @@ TfrmMain* frmMain;
 //---------------------------------------------------------------------------
 __fastcall TfrmMain::TfrmMain(TComponent* Owner) : TForm(Owner)
 {
-    NetList = new TStringList;
-    LoadDefaults();
-    DMod->GetNetNames(NetList);
+	NetList = new TStringList;
+	std::vector<TStringColumn*> Cols;
 
-    std::vector<TStringColumn*> Cols = { scSerialNo, scCallsign, scState, scQSL,
-        scCity, scName, scStatus, scCounty, scGrid, scStreet, scZip, scMemberID,
-        scCountry, scDXCC, scPreferred, scRemarks };
+	Cols = { scSerialNo, scCallsign, scState, scQSL,
+		scCity, scName, scStatus, scCounty, scGrid, scStreet, scZip, scMemberID,
+		scCountry, scDXCC, scPreferred, scRemarks };
 
-    // build map of Header Name/TColumn
-    auto func = [this](TStringColumn* col) { ColumnMap[col->Header] = col; };
+	for (auto Item : Cols)
+		ColumnMap[Item->Header] = Item;
 
-    for (auto Item : Cols)
-        func(Item);
+   	LoadDefaults();
+	DMod->GetNetNames(NetList);
 }
 //---------------------------------------------------------------------------
 
@@ -71,10 +71,10 @@ void TfrmMain::DisplayNet()
         lbStatus->Text = DMod->ErrorMessage();
     }
     edFreq->Text = Net.Frequency;
-    edBand->Text = Net.Band;
+	edBand->Text = Net.Band;
     edMode->Text = Net.Mode;
     edNetControl->Text = Net.NetControl;
-    edLogger->Text = Net.Logger;
+	edLogger->Text = Net.Logger;
     edSubscribers->Text = Net.SubscriberCount;
 }
 
@@ -101,8 +101,8 @@ bool TfrmMain::GetCheckins()
             retval = true;
         } else { // NET not found/closed
             Grid->RowCount = 0;
-            edNET->Text = "";
-        }
+			edNET->Text = "";
+		}
     }
     DisplayNet();
     ShowBusy(false);
@@ -117,7 +117,7 @@ bool TfrmMain::GetCheckins()
 void TfrmMain::SetRows(CheckinList* Clist)
 {
     // sometimes the 'pointer' row is set to a value outside of the available
-    // SerialNo's
+	// SerialNo's
 
     int PointerRow = -1; // unselected
     int Row;
@@ -125,7 +125,7 @@ void TfrmMain::SetRows(CheckinList* Clist)
     Grid->RowCount = Clist->Checkins.size();
     Grid->Row = Grid->RowCount - 1;
 
-    auto SetCol = [this, &Row](TColumn* Column, const String &Value) {
+	auto SetCol = [this, &Row](TColumn* Column, const String &Value) {
         Grid->Cells[Column->Index][Row] = Value;
     };
 
@@ -144,8 +144,8 @@ void TfrmMain::SetRows(CheckinList* Clist)
         SetCol(scCity, Chk.CityCountry);
         SetCol(scName, Chk.FirstName);
         SetCol(scStatus, Chk.Status);
-        SetCol(scCounty, Chk.County);
-        SetCol(scGrid, Chk.Grid);
+		SetCol(scCounty, Chk.County);
+		SetCol(scGrid, Chk.Grid);
         SetCol(scStreet, Chk.Street);
         SetCol(scZip, Chk.Zip);
         SetCol(scMemberID, Chk.MemberID);
@@ -200,7 +200,7 @@ void __fastcall TfrmMain::GridCellDblClick(TColumn* const Column, const int Row)
         return;
 
     Cmd = "https://qrz.com/db/" + Callsign;
-    ShellExecuteW(NULL, L"open", Cmd.c_str(), NULL, NULL, SW_SHOW);
+	ShellExecuteW(NULL, L"open", Cmd.c_str(), NULL, NULL, SW_SHOW);
 }
 //---------------------------------------------------------------------------
 
@@ -224,27 +224,30 @@ void TfrmMain::SaveDefaults()
         Reg->RootKey = HKEY_CURRENT_USER;
         Reg->OpenKey(fieldkey, true);
 
-        for (int x = 0; x < Grid->ColumnCount; x++) {
-            TColumn* col = Grid->Columns[x];
+		auto writefield = [this, &Reg](TColumn* col) {
             Reg->OpenKey(fieldkey, false);
             Reg->OpenKey(col->Header, true);
             Reg->WriteBool("Visible", col->Visible);
             Reg->WriteInteger("Width", col->Width);
             Reg->WriteInteger("Index", col->Index);
-            Reg->CloseKey();
-        }
+			Reg->CloseKey();
+		};
+
+        for (auto Item : ColumnMap)
+            writefield(Item.second);
+
         // save window state
         Reg->OpenKey(pgmkey, true);
         Reg->WriteBool("Maximized", WindowState == TWindowState::wsMaximized);
-        Reg->WriteInteger("Top", Top);
-        Reg->WriteInteger("Left", Left);
-        Reg->WriteInteger("Width", Width);
-        Reg->WriteInteger("Height", Height);
-        Reg->CloseKey();
-    } catch (ERegistryException &) {
-    }
-    if (Reg)
-        delete Reg;
+		Reg->WriteInteger("Top", Top);
+		Reg->WriteInteger("Left", Left);
+		Reg->WriteInteger("Width", Width);
+		Reg->WriteInteger("Height", Height);
+		Reg->CloseKey();
+	} catch (ERegistryException &) {
+	}
+	if (Reg)
+		delete Reg;
 }
 
 //
@@ -253,216 +256,219 @@ void TfrmMain::SaveDefaults()
 //
 void TfrmMain::LoadDefaults()
 {
-    TRegistry* Reg = NULL;
-    std::map<int, TColumn*> ColumnMap;
-    try {
-        Reg = new TRegistry(KEY_READ);
-        Reg->RootKey = HKEY_CURRENT_USER;
-        Reg->OpenKeyReadOnly(fieldkey);
+	TRegistry* Reg = NULL;
+	std::map<int, TColumn*> IndexMap;
+	try {
+		Reg = new TRegistry(KEY_READ);
+		Reg->RootKey = HKEY_CURRENT_USER;
+		Reg->OpenKeyReadOnly(fieldkey);
 
-        // read column data.
-        // save an index/column map for later use in a *second* pass
+		// read column data.
+		// save an index/column map for later use in a *second* pass
 
-        for (int x = 0; x < Grid->ColumnCount; x++) {
-            Reg->OpenKeyReadOnly(fieldkey);
-            TColumn* Column = Grid->Columns[x];
-            TMenuItem* MenuItem = new TMenuItem(this);
-
+		auto readfield = [this, &Reg, &IndexMap](TColumn *Column) {
+			Reg->OpenKeyReadOnly(fieldkey);
+			TMenuItem* MenuItem = new TMenuItem(this);
             MenuItem->AutoCheck = true;
-            MenuItem->OnClick = mnFieldsClick;
-            MenuItem->Text = Column->Header;
+			MenuItem->OnClick = mnFieldsClick;
+			MenuItem->Text = Column->Header;
+			if (!Reg->KeyExists(Column->Header)) // unlikely, but
+				return;
+			Reg->OpenKeyReadOnly(Column->Header);
+			Column->Visible = Reg->ReadInteger("Visible");
+			MenuItem->IsChecked = Column->IsVisible;
+			// add child item to fields menu
+			mnFields->AddObject(MenuItem);
 
-            if (!Reg->KeyExists(Column->Header)) // unlikely, but
-                continue;
+			Column->Width = Reg->ReadInteger("Width");
+			int Index = Reg->ReadInteger("Index");
+			IndexMap[Index] = Column;
+			Reg->CloseKey();
+		};
 
-            Reg->OpenKeyReadOnly(Column->Header);
-            Column->Visible = Reg->ReadInteger("Visible");
-            MenuItem->IsChecked = Column->IsVisible;
-            // add child item to fields menu
-            mnFields->AddObject(MenuItem);
+		for(auto Item : ColumnMap)
+			readfield(Item.second);
 
-            Column->Width = Reg->ReadInteger("Width");
-            int Index = Reg->ReadInteger("Index");
-            ColumnMap[Index] = Column;
-            Reg->CloseKey();
-        }
+		// get window state
 
-        // get window state
-        Reg->OpenKeyReadOnly(pgmkey);
-        if (Reg->ReadBool("Maximized"))
-            WindowState = TWindowState::wsMaximized;
-        Left = Reg->ReadInteger("Left");
-        Top = Reg->ReadInteger("Top");
-        Height = Reg->ReadInteger("Height");
-        Width = Reg->ReadInteger("Width");
-        Reg->CloseKey();
+		Reg->OpenKeyReadOnly(pgmkey);
+		if (Reg->ReadBool("Maximized"))
+			WindowState = TWindowState::wsMaximized;
+		Left = Reg->ReadInteger("Left");
+		Top = Reg->ReadInteger("Top");
+		Height = Reg->ReadInteger("Height");
+		Width = Reg->ReadInteger("Width");
+		Reg->CloseKey();
 
-        // we must set columns' index in *ordinal* fashion because of the
-        // 'swapping' method Delphi uses to reorder TColumns
-        for (auto Item : ColumnMap)
-            Item.second->Index = Item.first;
 
-    } catch (ERegistryException &except) {
-    }
-    if (Reg)
-        delete Reg;
+		// we must set columns' index in *ordinal* fashion because of the
+		// 'swapping' method Delphi uses to reorder TColumns
+
+		for (auto Item : IndexMap)
+			Item.second->Index = Item.first;
+
+	} catch (ERegistryException &except) {
+	}
+	if (Reg)
+		delete Reg;
 }
 
 #ifdef _DEBUG
 void TfrmMain::Debug(const String &str)
 {
-    OutputDebugStringW(str.c_str());
+	OutputDebugStringW(str.c_str());
 }
 #endif
 
 // toggle a column's visibility
 void __fastcall TfrmMain::mnFieldsClick(TObject* Sender)
 {
-    int Row = Grid->Row;
-    Grid->Row = Grid->RowCount - 1;
+	int Row = Grid->Row;
+	Grid->Row = Grid->RowCount - 1;
 
-    TMenuItem* MenuItem = reinterpret_cast<TMenuItem*>(Sender);
-    ColumnMap[MenuItem->Text]->Visible = MenuItem->IsChecked;
-    Grid->SelectRow(Row);
-    Grid->AutoCalculateContentSize = true;
+	TMenuItem* MenuItem = reinterpret_cast<TMenuItem*>(Sender);
+	ColumnMap[MenuItem->Text]->Visible = MenuItem->IsChecked;
+	Grid->SelectRow(Row);
+	Grid->AutoCalculateContentSize = true;
 }
 //---------------------------------------------------------------------------
 
 // query the application's web update server
 void __fastcall TfrmMain::nmUpdatesClick(TObject* Sender)
 {
-    Timer1->Enabled = false;
-    TRESTClient* Client = NULL;
-    TRESTRequest* Request = NULL;
-    TRESTResponse* Response = NULL;
-    TXMLDocument* Document = NULL;
+	Timer1->Enabled = false;
+	TRESTClient* Client = NULL;
+	TRESTRequest* Request = NULL;
+	TRESTResponse* Response = NULL;
+	TXMLDocument* Document = NULL;
 
-    try {
-        Util::WinVersionQuery WinVer;
-        Client = new TRESTClient(this);
-        Client->BaseURL = "https://gajewski.net";
-        Response = new TRESTResponse(this);
-        Request = new TRESTRequest(this);
-        Request->Client = Client;
-        Request->Resource = "NetLurker-getDLUrl.php";
-        Request->Response = Response;
-        Request->Params->AddItem(
-            L"version", WinVer.GetStr(L"ProductVersion"), pkGETorPOST);
-        Document = new TXMLDocument(this);
+	try {
+		Util::WinVersionQuery WinVer;
+		Client = new TRESTClient(this);
+		Client->BaseURL = "https://gajewski.net";
+		Response = new TRESTResponse(this);
+		Request = new TRESTRequest(this);
+		Request->Client = Client;
+		Request->Resource = "NetLurker-getDLUrl.php";
+		Request->Response = Response;
+		Request->Params->AddItem(
+			L"version", WinVer.GetStr(L"ProductVersion"), pkGETorPOST);
+		Document = new TXMLDocument(this);
 
-        Request->Execute();
+		Request->Execute();
 
-        if (Response->StatusCode == 200) {
-            _di_IXMLNode Node;
+		if (Response->StatusCode == 200) {
+			_di_IXMLNode Node;
 
-            Document->LoadFromXML(Response->Content);
-            Document->Active = true;
-            Node = Document->DocumentElement;
+			Document->LoadFromXML(Response->Content);
+			Document->Active = true;
+			Node = Document->DocumentElement;
 
-            // Hat tip to the Notepad++ updater here
-            if (Node->NodeName == "GUP") {
-                String Answer, Location, Version, Filename, Info;
+			// Hat tip to the Notepad++ updater here
+			if (Node->NodeName == "GUP") {
+				String Answer, Location, Version, Filename, Info;
 
-                Answer = Node->ChildValues["NeedToBeUpdated"];
-                if (Answer == "yes") {
-                    Location = Node->ChildValues["Location"];
-                    Version = Node->ChildValues["Version"];
-                    Info = Node->ChildValues["Info"];
+				Answer = Node->ChildValues["NeedToBeUpdated"];
+				if (Answer == "yes") {
+					Location = Node->ChildValues["Location"];
+					Version = Node->ChildValues["Version"];
+					Info = Node->ChildValues["Info"];
 
-                    frmDLChoice->Memo1->Text = Info;
-                    frmDLChoice->Label1->Text = "An updated version ";
-                    frmDLChoice->Label1->Text += Version;
-                    frmDLChoice->Label1->Text +=
-                        " is available.\nDownload and install this update?";
-                    frmDLChoice->ShowModal();
+					frmDLChoice->Memo1->Text = Info;
+					frmDLChoice->Label1->Text = "An updated version ";
+					frmDLChoice->Label1->Text += Version;
+					frmDLChoice->Label1->Text +=
+						" is available.\nDownload and install this update?";
+					frmDLChoice->ShowModal();
 
-                    if (frmDLChoice->ModalResult == mrOk) {
-                        frmDL->Show();
-                        frmDL->GetFile(Location, Filename);
-                        frmDL->Close();
-                        if (!Filename.IsEmpty()) {
-                            ShowMessage(
-                                "Download complete. Application will close and update will proceed.");
-                            ShellExecuteW(NULL, L"open", Filename.c_str(), NULL,
-                                NULL, SW_SHOW);
-                            Close();
-                        }
-                    }
-                } else
-                    ShowMessage("You have the latest version.");
-            }
-        }
-    } catch (EXMLDocError &error) {
-    }
-    if (Response)
-        delete Response;
-    if (Request)
-        delete Request;
-    if (Client)
-        delete Client;
-    if (Document)
-        delete Document;
-    Timer1->Enabled = true;
+					if (frmDLChoice->ModalResult == mrOk) {
+						frmDL->Show();
+						frmDL->GetFile(Location, Filename);
+						frmDL->Close();
+						if (!Filename.IsEmpty()) {
+							ShowMessage(
+								"Download complete. Application will close and update will proceed.");
+							ShellExecuteW(NULL, L"open", Filename.c_str(), NULL,
+								NULL, SW_SHOW);
+							Close();
+						}
+					}
+				} else
+					ShowMessage("You have the latest version.");
+			}
+		}
+	} catch (EXMLDocError &error) {
+	}
+	if (Response)
+		delete Response;
+	if (Request)
+		delete Request;
+	if (Client)
+		delete Client;
+	if (Document)
+		delete Document;
+	Timer1->Enabled = true;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::mnAboutClick(TObject* Sender)
 {
-    frmAbout->ShowModal();
+	frmAbout->ShowModal();
 }
 //---------------------------------------------------------------------------
+
 // select the net to display
 void __fastcall TfrmMain::bnSelectClick(TObject* Sender)
 {
-    NetList->Clear();
-    DMod->GetNetNames(NetList);
-    frmSelect->ListBox1->Items = NetList;
+	NetList->Clear();
+	DMod->GetNetNames(NetList);
+	frmSelect->ListBox1->Items = NetList;
 
-    if (NetList->Count > 0)
-        frmSelect->ListBox1->ItemIndex =
-            edNET->Text.IsEmpty() ? 0 : NetList->IndexOf(edNET->Text);
+	if (NetList->Count > 0)
+		frmSelect->ListBox1->ItemIndex =
+			edNET->Text.IsEmpty() ? 0 : NetList->IndexOf(edNET->Text);
 
-    frmSelect->ShowModal();
+	frmSelect->ShowModal();
 
-    if (frmSelect->ModalResult == mrOk) {
-        TListBoxItem* Item = frmSelect->ListBox1->Selected;
+	if (frmSelect->ModalResult == mrOk) {
+		TListBoxItem* Item = frmSelect->ListBox1->Selected;
 
-        if (Item == NULL) // nothing chosen?
-            return;
+		if (Item == NULL) // nothing chosen?
+			return;
 
-        if (Item->Text != edNET->Text) {
-            edNET->Text = Item->Text;
-            Grid->ScrollToTop();
-            Timer1->Enabled = false;
-            GetCheckins();
-            Timer1->Enabled = true;
-        }
-    }
+		if (Item->Text != edNET->Text) {
+			edNET->Text = Item->Text;
+			Grid->ScrollToTop();
+			Timer1->Enabled = false;
+			GetCheckins();
+			Timer1->Enabled = true;
+		}
+	}
 }
 //---------------------------------------------------------------------------
 
 // use a PDF for help file
 void __fastcall TfrmMain::nmHelpClick(TObject* Sender)
 {
-    using System::Ioutils::TPath;
-    Util::WinVersionQuery Version;
+	using System::Ioutils::TPath;
+	Util::WinVersionQuery Version;
 
-    // pdf help will be in same dir as executable
-    String Path = TPath::GetDirectoryName(Version.ModuleName());
-    String Filename = TPath::Combine(Path, "NetLurker.pdf");
-    ShellExecuteW(NULL, L"open", Filename.c_str(), NULL, NULL, SW_SHOW);
+	// pdf help will be in same dir as executable
+	String Path = TPath::GetDirectoryName(Version.ModuleName());
+	String Filename = TPath::Combine(Path, "NetLurker.pdf");
+	ShellExecuteW(NULL, L"open", Filename.c_str(), NULL, NULL, SW_SHOW);
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TfrmMain::FormShow(TObject* Sender)
 {
-    // do first-time Grid draw here and not in ctor
-    if (NetList->Count > 0) {
-        edNET->Text = NetList->Strings[0];
-        GetCheckins();
-        Timer1->Enabled = true;
-        ShowBusy(false);
-    }
+	// do first-time Grid draw here and not in ctor
+	if (NetList->Count > 0) {
+		edNET->Text = NetList->Strings[0];
+		GetCheckins();
+		Timer1->Enabled = true;
+		ShowBusy(false);
+	}
 }
 //---------------------------------------------------------------------------
 

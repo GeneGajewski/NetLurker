@@ -71,6 +71,9 @@ bool TfrmDL::GetFile(String &url, String &filename)
 	{
 	  // exceptions
 	}
+
+	// failed
+
 	if(FileExists(filename))
 		DeleteFile(filename);
 	filename = "";
